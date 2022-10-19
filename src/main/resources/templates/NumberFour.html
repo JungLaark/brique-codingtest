@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+	<div style="display:flex">
+		<div  style="flex:1">
+			<table style="border:1">
+				<thead>
+					<tr>
+						<th> 월 </th>
+						<th>평균 기온</th>
+						<th>평균 습도</th>
+					</tr>
+				</thead>
+				<tbody>
+					 <tr>
+					 	<td >1월</td>
+					 	<td id="cell10"> </td>
+					 	<td id="cell11"> </td>
+					 </tr>
+					 <tr>
+					 	<td >2월</td>
+					 	<td id="cell20"> </td>
+					 	<td id="cell21"> </td>
+					 </tr>
+					 <tr>
+					 	<td >3월</td>
+					 	<td id="cell30"> </td>
+					 	<td id="cell31"> </td>
+					 </tr>
+					 <tr>
+					 	<td >4월</td>
+					 	<td id="cell40"> </td>
+					 	<td id="cell41"> </td>
+					 </tr>
+					 <tr>
+					 	<td >5월</td>
+					 	<td id="cell50"> </td>
+					 	<td id="cell51"> </td>
+					 </tr>
+					 <tr>
+					 	<td >6월</td>
+					 	<td id="cell60"> </td>
+					 	<td id="cell61"> </td>
+					 </tr>
+					 <tr>
+					 	<td >7월</td>
+					 	<td id="cell70"> </td>
+					 	<td id="cell71"> </td>
+					 </tr>
+					 <tr>
+					 	<td >8월</td>
+					 	<td id="cell80"> </td>
+					 	<td id="cell81"> </td>
+					 </tr>
+					 <tr>
+					 	<td >9월</td>
+					 	<td id="cell90"> </td>
+					 	<td id="cell91"> </td>
+					 </tr>
+					 <tr>
+					 	<td >10월</td>
+					 	<td id="cell100"> </td>
+					 	<td id="cell101"> </td>
+					 </tr>
+					 <tr>
+					 	<td >11월</td>
+					 	<td id="cell110"> </td>
+					 	<td id="cell111"> </td>
+					 </tr>
+					 <tr>
+					 	<td >12월</td>
+					 	<td id="cell120"> </td>
+					 	<td id="cell121"> </td>
+					 </tr>
+				</tbody>
+			</table>
+			<input style="width:50 ;height:20;" id="btnRandom" type="button" value="Random">
+			<div>
+				<button onclick="location.href='/'">메인으로</button>
+			</div>
+		</div>
+		<div  style="width:400 ;height:400; flex:2">
+			<canvas id="myChart" style="width:400 ;height:400"></canvas>
+		</div>
+		<br>
+		<br>
+		
+	</div>
+</body>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.bundle.min.js"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.min.js"></script>
+<script src="//code.jquery.com/jquery-3.3.1.min.js"></script>
+<script>
+
+	var context = document.getElementById('myChart');
+	var context;
+	var temp1;
+	var temp2;
+	var temperature;
+	var humid;
+	let labels = [];
+	let avgTemp = [];
+	let avgHumid = [];
+
+	const v_config = {
+	    type: 'line',
+	    data: {
+	    	labels: [
+	    		'1월',
+	    		'2월',
+	    		'3월',
+	    		'4월',
+	    		'5월',
+	    		'6월',
+	    		'7월',
+	    		'8월',
+	    		'9월',
+	    		'10월',
+	    		'11월',
+	    		'12월'
+	    	],
+		    datasets: [
+		        {
+		            label: '평균 기온',
+		            data: avgTemp,
+		            borderColor: '#36a2eb',
+		            backgroundColor: 'transparent',
+		            yAxisID: 'y'
+		        },
+		        {
+		            label: '평균 습도',
+		            data: avgHumid,
+		            borderColor: '#ffb0c1',
+		            backgroundColor: 'transparent',
+		            yAxisID: 'y1'
+		        }
+		    ]
+	    },
+	    options: {
+	        interaction: {
+	            intersect: false,
+	            mode: 'index',
+	        },
+	        scales: {
+	        	 yAxes : [
+	 	        	{
+	 	        		type: 'linear',
+	  	                display: true,
+	  	                position: 'left',
+	  	                suggestedMin: 0,
+	  	                suggestedMax: 50,
+	  	                id: 'y',
+	  	                gridLines: {
+	  	                	display: false
+	  	                },
+	 	        	},
+	 	        	{
+	 	        		type: 'linear',
+	  	                display: true,
+	  	                position: 'right',
+	  	                suggestedMin: 0,
+	  	                suggestedMax: 100,
+	  	                id: 'y1',
+	  	                gridLines: {
+	  	                	display: false
+	  	                },
+	 	        	},
+	 	        ]
+	        }
+	    }
+	};
+	
+	var myChart = new Chart(context, v_config);
+	
+	document.getElementById('btnRandom').onclick = function(){
+		
+		avgTemp = [];
+		avgHumid = [];
+		
+		for(var i=1; i<=12; i++){
+			temp1 = 'cell' + i + '0';
+			temp2 = 'cell' + i + '1';
+			
+			temperature = (Math.random() * 40).toFixed(1);
+			humid = (Math.random() * 100).toFixed(0);
+			
+			document.getElementById(temp1).innerHTML = temperature;
+			document.getElementById(temp2).innerHTML = humid;
+			
+			avgTemp.push(temperature);
+			avgHumid.push(humid);
+		}
+		
+		myChart.data.datasets[0].data = avgTemp;
+		myChart.data.datasets[1].data = avgHumid;
+		myChart.update();
+	}
+	
+	
+
+</script>
+</html>
