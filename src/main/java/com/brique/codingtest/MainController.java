@@ -54,7 +54,7 @@ public class MainController {
 		NumberFive numberFive;
 		RestTemplate restTemplate = new RestTemplate();
 		Map<String, Integer> map = new HashMap<String, Integer>();
-		String uri = "http://codingtest.brique.kr:8080/random";
+		String uri = "";
 		String key = "";
 		String result = "";
 		int sum = 0;
